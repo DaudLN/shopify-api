@@ -17,8 +17,6 @@ INSTALLED_APPS = [
     "rest_framework",
     "djoser",
     "django_filters",
-    "debug_toolbar",
-    "silk",
     "store",
     "tag",
     "like",
@@ -96,6 +94,8 @@ STATIC_URL = "static/"
 
 STATIC_ROOT = BASE_DIR / "static"
 
+STATICFILES_DIR = (BASE_DIR / "static",)
+
 MEDIA_ROOT = BASE_DIR / "media"
 
 MEDIA_URL = "media/"
@@ -129,7 +129,7 @@ CELERY_ENABLE_UTC = True
 CELERY_BEAT_SCHEDULE = {
     "send_emails_to_customers": {
         "task": "playground.tasks.send_emails_to_customers",
-        "schedule": 5,
+        "schedule": crontab(hour=7, minute=30),
         "args": ["Hello world"],
     }
 }

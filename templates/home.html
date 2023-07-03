@@ -9,16 +9,6 @@
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
-    <title>Document</title>
-    <style>
-      .form-input {
-        width: 100vw;
-      }
-      input[type="text"],
-      select {
-        display: block;
-      }
-    </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -81,28 +71,8 @@
       </div>
     </nav>
     <main class="container">
-      <div class="form-submit">
-        <form action="">
-          <input type="text" placeholder="Name" />
-          <input type="email" placeholder="Email" />
-          <select>
-            <option value="" selected>Select country</option>
-            <option value="tanzania">Tanzania</option>
-            <option value="kenya">Kenya</option>
-            <option value="uganda">Uganda</option>
-          </select>
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
-      <blockquote cite="http://www.worldwildlife.org/who/index.html">
-        For 50 years, WWF has been protecting the future of nature. The world's
-        leading conservation organization, WWF works in 100 countries and is
-        supported by 1.2 million members in the United States and close to 5
-        million globally.
-      </blockquote>
-      <h1>Hello world</h1>
-      <ul class="list-group">
-        {% for product in products %}
+      <ul class="list-group my-5">
+        {% for product in products%}
         <li class="list-group-item">{{product.title}}</li>
         {% endfor %}
       </ul>

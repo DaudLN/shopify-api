@@ -8,5 +8,5 @@ urlpatterns = [
     path("__debug__/", include("debug_toolbar.urls")),
     path("", include("store.urls")),
     path("playground", include("playground.urls")),
-    path("silk/", include("silk.urls", namespace="silk")),
+    # path("silk/", include("silk.urls", namespace="silk")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

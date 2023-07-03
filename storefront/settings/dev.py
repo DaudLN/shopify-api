@@ -2,7 +2,12 @@ from .common import *
 
 DEBUG = True
 
-MIDDLEWARE.append("silk.middleware.SilkyMiddleware")
+INSTALLED_APPS += [
+    "debug_toolbar",
+    # "silk",
+]
+
+# MIDDLEWARE += ["silk.middleware.SilkyMiddleware"]
 
 SECRET_KEY = "django-insecure-1tcb$yxuvlbp@2*=hrq3&7*ah^%j$)@+7qdj0o1gc1+hj+jc&2"
 
