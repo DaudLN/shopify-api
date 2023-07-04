@@ -38,3 +38,10 @@ class ProductSerializer(serializers.ModelSerializer):
             "collection",
             "images",
         ]
+
+    def update(self, instance: Product, validated_data):
+        print(validated_data)
+        instance.title = validated_data.get("title", instance.title)
+        instance.unit_price = validated_data.get("unit_price", 100)
+        instance.save()
+        return instance

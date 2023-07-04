@@ -1,0 +1,45 @@
+{% extends "emails/base.html" %} {% block email_content %}
+<div class="email-container">
+  <div class="content">
+    <p class="thank-you-message">Dear Customer</p>
+    <p class="thank-you-message">
+      We are thrilled to inform you that we have received your order and it is
+      being processed.
+    </p>
+    <div class="order-details">
+      <h2>Order Details</h2>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Unit price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+            <tr class="order-item">
+              <td>{{ product.title }}</td> 
+              <td>{{ product.unit_price }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>Total price</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <p class="thank-you-message">
+      Thank you for choosing our store. We will notify you once your order is
+      shipped.
+    </p>
+  </div>
+  <div class="footer">
+    <p>
+      If you have any questions, please contact our customer support team at
+      <a href="mailto:support@example.com">support@example.com</a>.
+    </p>
+  </div>
+</div>
+{% endblock %}
