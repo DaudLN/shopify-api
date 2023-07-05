@@ -1,4 +1,5 @@
 from django.db.models import Count
+from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django_filters.rest_framework import DjangoFilterBackend
@@ -26,6 +27,10 @@ from .serializers import (
 from .utilities import get_message
 
 # Create your views here.
+
+
+def home(request):
+    return render(request, "home.html")
 
 
 class ProductViewSet(viewsets.ModelViewSet):

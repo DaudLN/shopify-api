@@ -16,7 +16,8 @@ product_router.register("images", views.ProductImageViewSet, basename="product-i
 cart_router.register("items", views.CartItemViewSet, basename="cart-items")
 
 urlpatterns = [
-    path(r"", include(router.urls)),
-    path(r"", include(product_router.urls)),
-    path(r"", include(cart_router.urls)),
+    path(r"", views.home, name="home"),
+    path(r"store/", include(router.urls)),
+    path(r"store/", include(product_router.urls)),
+    path(r"store/", include(cart_router.urls)),
 ]
