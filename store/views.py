@@ -2,15 +2,14 @@ from django.db.models import Count
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import permissions, status, viewsets
+from rest_framework import mixins, permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
-from rest_framework import mixins
 from rest_framework.request import Request
 from rest_framework.response import Response
 
 from .filters import ProductFilter
-from .models import Cart, CartItem, Collection, Product, ProductImage
+from .models import Cart, CartItem, Collection, Customer, Order, Product, ProductImage
 from .paginators import ProductPagination
 from .permissions import IsAdminOrReadOnly
 from .serializers import (
@@ -18,6 +17,8 @@ from .serializers import (
     CartSerializer,
     CollectionSerializer,
     CreateCartItemSerializer,
+    CustomerSerializer,
+    OrderSerilizer,
     ProductImageSerializer,
     ProductSerializer,
     UpdateCartItemSerializer,
@@ -38,11 +39,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     filterset_class = ProductFilter
     search_fields = ["title", "description"]
     ordering_fields = ["unit_price", "last_update"]
-
-    def get_permissions(self):
-        if self.request.method in permissions.SAFE_METHODS:
-            return [permissions.AllowAny()]
-        return [permissions.IsAdminUser()]
+    permission_classes = [IsAdminOrReadOnly]
 
     @method_decorator(cache_page(60 * 60 * 2))
     def list(self, request, *args, **kwargs):
@@ -87,10 +84,6 @@ class CollectionViewSet(viewsets.ModelViewSet):
             )
         return super().destroy(request, *args, **kwargs)
 
-    @action(detail=False)
-    def me(self, request: Request):
-        return Response(dict(message="Ok"))
-
 
 class CartViewSet(
     mixins.CreateModelMixin,
@@ -128,3 +121,28 @@ class CartItemViewSet(viewsets.ModelViewSet):
         serializer.save()
         serializer = CartItemSerializer(instance=instance)
         return Response(serializer.data)
+
+
+class OrderViewSet(viewsets.ModelViewSet):
+    serializer_class = OrderSerilizer
+    queryset = Order.objects.select_related(
+        "customer", "customer__user"
+    ).prefetch_related("items", "items__product")
+
+
+class CustomerViewSet(viewsets.ModelViewSet):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+    @action(detail=False, permission_classes=[permissions.IsAuthenticated])
+    def me(self, request: Request):
+        (customer, created) = Customer.objects.get_or_create(user_id=request.user.id)
+        if request.method == "GET":
+            serializer = CustomerSerializer(customer)
+            return Response(serializer.data)
+        elif request.method == "POST":
+            serializer = CustomerSerializer(instance=customer, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
