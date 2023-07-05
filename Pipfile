@@ -23,6 +23,7 @@ python-dotenv = "*"
 dj-database-url = "*"
 gunicorn = "*"
 whitenoise = "*"
+drf-spectacular = "*"
 
 [dev-packages]
 autopep8 = "*"

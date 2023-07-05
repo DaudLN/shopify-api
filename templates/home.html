@@ -17,7 +17,7 @@
       .container {
         max-width: 960px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 40px;
       }
 
       h1,
@@ -33,6 +33,10 @@
       ul {
         list-style: none;
         padding: 0;
+      }
+
+      li {
+        padding: 10px;
       }
 
       /* Header Styles */
@@ -60,8 +64,9 @@
       }
 
       section h2 {
-        font-size: 24px;
+        font-size: 28px;
         margin-bottom: 10px;
+        border-bottom: #007bff solid 2px;
       }
 
       /* Footer Styles */
@@ -100,46 +105,47 @@
       <h1>Welcome to Shopify API</h1>
       <p>Explore the features and endpoints supported by our app.</p>
     </header>
+    <main class="container">
+      <section>
+        <h2>Endpoints</h2>
+        <ul>
+          <li>
+            <a href="store/products/">Products</a>
+          </li>
+          <li>
+            <a href="store/collections/">Collections</a>
+          </li>
+          <li>
+            <a href="store/carts/">Carts</a>
+          </li>
+          <li>
+            <a href="store/orders/">Orders</a>
+          </li>
+          <li>
+            <a href="/store/customers/">Customers</a>
+          </li>
+        </ul>
+      </section>
 
-    <section>
-      <h2>Endpoints</h2>
-      <ul>
-        <li>
-          <a href="https://shopify-ed15.onrender.com/store/products/"
-            >Products</a
-          >
-        </li>
-        <li>
-          <a href="https://shopify-ed15.onrender.com/store/collections/"
-            >Collections</a
-          >
-        </li>
-        <li>
-          <a href="https://shopify-ed15.onrender.com/store/carts/">Carts</a>
-        </li>
-        <li>
-          <a href="https://shopify-ed15.onrender.com/store/orders/">Orders</a>
-        </li>
-        <li>
-          <a href="https://shopify-ed15.onrender.com/store/customers/"
-            >Customers</a
-          >
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Features</h2>
-      <ul>
-        <li>Searching</li>
-        <li>Filtering</li>
-        <li>Nested URLs</li>
-        <li>Many other new features</li>
-      </ul>
-    </section>
-
-    <footer>
-      <p>&copy; 2023 Your App. All rights reserved.</p>
-    </footer>
+      <section>
+        <h2>Features</h2>
+        <ul>
+          <li>Searching</li>
+          <li>Filtering</li>
+          <li>Nested URLs</li>
+          <li>Many other new features</li>
+        </ul>
+      </section>
+      <section>
+        <h2>API Documentation</h2>
+        <ul>
+          <li><a href="api/docs/">Swagger UI</a></li>
+          <li><a href="api/readoc/">Redoc</a></li>
+        </ul>
+      </section>
+      <footer>
+        <p>&copy; 2023 Shopify. All rights reserved.</p>
+      </footer>
+    </main>
   </body>
 </html>

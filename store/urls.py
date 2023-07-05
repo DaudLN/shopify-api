@@ -1,6 +1,11 @@
 from django.urls import include, path
 from rest_framework_nested import routers
 from . import views
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularRedocView,
+    SpectacularSwaggerView,
+)
 
 router = routers.DefaultRouter()
 router.register("products", views.ProductViewSet, basename="products")
@@ -17,6 +22,17 @@ cart_router.register("items", views.CartItemViewSet, basename="cart-items")
 
 urlpatterns = [
     path(r"", views.home, name="home"),
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path(
+        "api/docs/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
+    path(
+        "api/readoc/",
+        SpectacularRedocView.as_view(url_name="schema"),
+        name="redoc",
+    ),
     path(r"store/", include(router.urls)),
     path(r"store/", include(product_router.urls)),
     path(r"store/", include(cart_router.urls)),

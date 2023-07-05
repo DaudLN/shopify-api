@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "djoser",
     "django_filters",
+    "drf_spectacular",
     "store",
     "tag",
     "like",
@@ -120,7 +121,8 @@ REST_FRAMEWORK = {
     # 'DEFAULT_THROTTLE_RATES': {
     #     'anon': '100/day',
     #     'user': '1000/day'
-    # }
+    # },
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 AUTH_USER_MODEL = "core.User"
@@ -197,3 +199,11 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 
 EMAIL_USE_TLS = True
+
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Shopify API",
+    "DESCRIPTION": "Explore the features and endpoints supported by our app",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
