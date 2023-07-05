@@ -42,6 +42,11 @@ ipython_config.py
 
 # Environments
 env/
+*.env
+
+
+# Dev
+storefront/settings/dev.py
 
 # Media and Static directories
 /media/

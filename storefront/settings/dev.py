@@ -1,5 +1,11 @@
+import os
+import dj_database_url
+
+from dotenv import load_dotenv
+
 from .common import *
 
+load_dotenv()
 DEBUG = True
 
 INSTALLED_APPS += [
@@ -9,18 +15,11 @@ INSTALLED_APPS += [
 
 # MIDDLEWARE += ["silk.middleware.SilkyMiddleware"]
 
-SECRET_KEY = "django-insecure-1tcb$yxuvlbp@2*=hrq3&7*ah^%j$)@+7qdj0o1gc1+hj+jc&2"
-
+SECRET_KEY = os.environ.get("SECRET_KEY")
+DATABASE_URL = os.environ.get("DATABASE_URL")
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "storefront",
-        "USER": "admin",
-        "PASSWORD": "@Davy2130",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
-    }
+    "default": dj_database_url.parse(DATABASE_URL),
 }
 
 
