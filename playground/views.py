@@ -1,20 +1,18 @@
 import logging
 
 import requests
-from django.core.mail import EmailMultiAlternatives, BadHeaderError
+from django.core.mail import BadHeaderError
 from django.db.models import Sum
 from django.http.request import HttpRequest
 from django.shortcuts import render
-from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
-from django.utils.html import strip_tags
 from django.views.decorators.cache import cache_page
 from rest_framework.views import APIView
 from templated_mail.mail import BaseEmailMessage
 
 from store.models import Product
 
-from .tasks import send_emails_to_customers
+from .tasks import send_emails_to_customers, sent_order_email
 
 logger = logging.getLogger(__name__)
 
@@ -42,28 +40,7 @@ class HomePage(APIView):
 
 
 def send_store_email(request):
-    products = Product.objects.values().annotate(total_price=Sum("unit_price"))[:10]
-    # Render the HTML content from the template
-    html_content = render_to_string("emails/email.html", context={"products": products})
-
-    # Create a plain text version of the email (optional)
-    text_content = strip_tags(html_content)
-
-    try:
-        # Create the email message
-        email = EmailMultiAlternatives(
-            "Thanks for your order",
-            text_content,
-            to=["daudnamayala@gmail.com", "sailing@gmail.com", "admin@dj.com"],
-        )
-        email.attach_file("media/images/products/me.jpg")
-        # Attach the HTML content
-        email.attach_alternative(html_content, "text/html")
-
-        # Send the email
-        email.send()
-    except BadHeaderError:
-        pass
+    sent_order_email.delay()
     return render(request, "home.html")
 
 

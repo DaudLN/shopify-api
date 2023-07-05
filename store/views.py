@@ -5,14 +5,23 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework import mixins
 from rest_framework.request import Request
 from rest_framework.response import Response
 
 from .filters import ProductFilter
-from .models import Collection, Product, ProductImage
+from .models import Cart, CartItem, Collection, Product, ProductImage
 from .paginators import ProductPagination
 from .permissions import IsAdminOrReadOnly
-from .serializers import CollectionSerializer, ProductImageSerializer, ProductSerializer
+from .serializers import (
+    CartItemSerializer,
+    CartSerializer,
+    CollectionSerializer,
+    CreateCartItemSerializer,
+    ProductImageSerializer,
+    ProductSerializer,
+    UpdateCartItemSerializer,
+)
 from .utilities import get_message
 
 # Create your views here.
@@ -81,3 +90,41 @@ class CollectionViewSet(viewsets.ModelViewSet):
     @action(detail=False)
     def me(self, request: Request):
         return Response(dict(message="Ok"))
+
+
+class CartViewSet(
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.DestroyModelMixin,
+    viewsets.GenericViewSet,
+):
+    serializer_class = CartSerializer
+    queryset = Cart.objects.prefetch_related("items", "items__product").all()
+
+
+class CartItemViewSet(viewsets.ModelViewSet):
+    http_method_names = ["get", "post", "patch", "option", "delete"]
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return CreateCartItemSerializer
+        if self.request.method == "PATCH":
+            return UpdateCartItemSerializer
+        return CartItemSerializer
+
+    def get_queryset(self):
+        return CartItem.objects.select_related("product").filter(
+            cart_id=self.kwargs["cart_pk"]
+        )
+
+    def get_serializer_context(self):
+        return {"cart_id": self.kwargs["cart_pk"]}
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = UpdateCartItemSerializer(instance, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        serializer = CartItemSerializer(instance=instance)
+        return Response(serializer.data)

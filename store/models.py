@@ -1,3 +1,4 @@
+from typing import Any
 from uuid import uuid4
 
 from django.conf import settings
@@ -6,7 +7,7 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from django.db.models import Count
+from django.db.models import Count, Sum
 from django.utils.text import slugify
 
 # Create your models here.
@@ -209,6 +210,10 @@ class Cart(models.Model):
     def get_absolute_url(self):
         return reverse("Cart_detail", kwargs={"pk": self.pk})
 
+    @property
+    def total_price(self):
+        return sum([item.total_price for item in self.items.all()])
+
 
 class CartItem(models.Model):
     cart = models.ForeignKey("Cart", on_delete=models.CASCADE, related_name="items")
@@ -218,13 +223,21 @@ class CartItem(models.Model):
     class Meta:
         verbose_name = _("CartItem")
         verbose_name_plural = _("CartItems")
-        unique_together = [["cart", "product"]]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["cart", "product"], name="unique_product_cart"
+            ),
+        ]
 
     def __str__(self):
         return str(self.id)
 
     def get_absolute_url(self):
         return reverse("CartItem_detail", kwargs={"pk": self.pk})
+
+    @property
+    def total_price(self):
+        return self.quantity * self.product.unit_price
 
 
 class Address(models.Model):
