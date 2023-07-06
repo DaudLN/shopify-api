@@ -46,11 +46,11 @@ class ProductViewSet(viewsets.ModelViewSet):
     ordering_fields = ["unit_price", "last_update"]
     permission_classes = [IsAdminOrReadOnly]
 
-    # @method_decorator(cache_page(60 * 60 * 2))
+    @method_decorator(cache_page(60 * 60 * 2))
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
-    # @method_decorator(cache_page(60 * 60 * 2))
+    @method_decorator(cache_page(60 * 60 * 2))
     def retrieve(self, request, *args, **kwargs):
         return super().retrieve(request, *args, **kwargs)
 
