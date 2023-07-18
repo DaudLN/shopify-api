@@ -1,0 +1,10 @@
+		-----Docker processes to start. Commands------
+
+1. docker run --rm --name smtp -it -p 3000:80 -p 2525:25 rnwood/smtp4dev:v3
+
+2. docker run --rm -d -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=@Davy2130 mysql:8.0
+
+3. docker run --rm -d -p 2345:5432 --name postgres -e POSTGRES_ROLE=postgres -e POSTGRES_DB=storefront -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=@Davy2130 postgres:15.3
+
+4. docker run --rm -d -p 3306:3306 --name mariadb -e MARIADB_USER=admin -e MARIADB_PASSWORD=@Davy2130 -e MARIADB_ROOT_PASSWORD=@Davy2130  mariadb:11.0.2
+

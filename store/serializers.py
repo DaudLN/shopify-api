@@ -26,9 +26,8 @@ class ProductImageSerializer(serializers.ModelSerializer):
         fields = ["id", "image"]
 
     def create(self, validated_data):
-        return ProductImage.objects.create(
-            product_id=self.context["product_id"], **validated_data
-        )
+        product_id: int = self.context["product_id"]
+        return ProductImage.objects.create(product_id=product_id, **validated_data)
 
 
 class ProductSerializer(serializers.ModelSerializer):

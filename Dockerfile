@@ -1,11 +1,12 @@
-FROM python:3.10
+FROM python:3.10.7
 
 ENV PYTHONUNBUFFERED=1
+RUN mkdir /app
 WORKDIR /app
 
-# Required to install mysqlclient with Pip
-RUN apt update \
-  && apt install python3-dev default-libmysqlclient-dev gcc -y
+# Required to install mysqlclient client and other dependencies
+RUN apt-get update \
+  && apt-get install python3-dev default-libmysqlclient-dev gcc -y
 
 # Install pipenv
 RUN pip install --upgrade pip 
@@ -13,9 +14,7 @@ RUN pip install pipenv
 
 # Install application dependencies
 COPY Pipfile Pipfile.lock /app/
-# We use the --system flag so packages are installed into the system python
-# and not into a virtualenv. Docker containers don't need virtual environments. 
-RUN pipenv install --system --dev
+RUN pipenv install --system --dev --verbose --skip-lock
 
 # Copy the application files into the image
 COPY . /app/

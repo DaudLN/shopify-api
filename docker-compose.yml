@@ -1,33 +1,21 @@
 version: "3.9"
 services:
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: ./wait-for-it.sh postgres:5432 -- ./docker-entrypoint.sh
+  mysql:
+    image: mysql:8.0.33
+    container_name: mysql
     ports:
-      - 8000:8000
-    depends_on:
-      - redis
-      - postgres
-    restart: on-failure
-    volumes:
-      - .:/app
-
-  postgres:
-    image: postgres:15.3
-    ports:
-      - 5433:5432
+      - 3306:3306
     restart: always
     environment:
-      - POSTGRES_DB=mydatabase
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=MyPassword
+      - MYSQL_DATABASE=storefront
+      - MYSQL_ROOT_PASSWORD=MyPassword
+
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - mysqldata:/var/lib/mysql
 
   redis:
     image: redis:7.0-alpine3.18
+    container_name: redis
     ports:
       - 6379:6379
     restart: always
@@ -36,22 +24,42 @@ services:
 
   smtp4dev:
     image: rnwood/smtp4dev:v3
+    container_name: smtp
     ports:
       - 5000:80
       - 25:25
     restart: always
 
-  celery:
+  web:
+    container_name: django
     build:
       context: .
       dockerfile: Dockerfile
-    command: celery -A storefront worker --loglevel=info
+    command: ./wait-for-it.sh mysql:3306 -- ./docker-entrypoint.sh
+    ports:
+      - 8000:8000
     depends_on:
       - redis
+      - mysql
+    restart: on-failure
+    volumes:
+      - .:/app
+
+  celery:
+    container_name: celery
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - redis
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     volumes:
       - .:/app
 
   celery-beat:
+    container_name: celery-beat
     build:
       context: .
       dockerfile: Dockerfile
@@ -62,6 +70,7 @@ services:
       - .:/app
 
   flower:
+    container_name: flower
     build:
       context: .
       dockerfile: Dockerfile
@@ -71,24 +80,25 @@ services:
       - redis
       - celery
     environment:
-      - DEBUG=1
-      - CELERY_BROKER=redis://redis:6379/0
-      - CELERY_BACKEND=redis://redis:6379/0
+      DEBUG: 1
+      CELERY_BROKER: redis://redis:6379/0
+      CELERY_BACKEND: redis://redis:6379/0
     ports:
       - 5555:5555
 
-  tests:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: ./wait-for-it.sh postgres:5432 -- ptw
-    depends_on:
-      - redis
-      - postgres
-    tty: true
-    volumes:
-      - .:/app
+  # tests:
+  #   container_name: tests
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   command: ./wait-for-it.sh mysql:3306 -- ptw
+  #   depends_on:
+  #     - redis
+  #     - mysql
+  #   tty: true
+  #   volumes:
+  #     - .:/app
 
 volumes:
-  pgdata:
+  mysqldata:
   redisdata:

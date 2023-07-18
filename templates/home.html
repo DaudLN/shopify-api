@@ -1,104 +1,102 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html>
   <head>
     <title>Your App Landing Page</title>
     <style>
-      /* Global Styles */
+      
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+    }
 
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f7f7f7;
-      }
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px;
+  }
 
-      .container {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 40px;
-      }
+  h1,
+  h2 {
+    color: #333;
+  }
 
-      h1,
-      h2 {
-        color: #333;
-      }
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
 
-      a {
-        color: #007bff;
-        text-decoration: none;
-      }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
 
-      ul {
-        list-style: none;
-        padding: 0;
-      }
+  li {
+    padding: 10px;
+  }
 
-      li {
-        padding: 10px;
-      }
+  /* Header Styles */
 
-      /* Header Styles */
+  header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
 
-      header {
-        background-color: #007bff;
-        color: #fff;
-        padding: 20px;
-        text-align: center;
-      }
+  header h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
 
-      header h1 {
-        font-size: 28px;
-        margin-bottom: 10px;
-      }
+  /* Section Styles */
 
-      /* Section Styles */
+  section {
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
 
-      section {
-        margin-bottom: 40px;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
+  section h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    border-bottom: #007bff solid 2px;
+  }
 
-      section h2 {
-        font-size: 28px;
-        margin-bottom: 10px;
-        border-bottom: #007bff solid 2px;
-      }
+  /* Footer Styles */
 
-      /* Footer Styles */
+  footer {
+    background-color: #f7f7f7;
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #888;
+  }
 
-      footer {
-        background-color: #f7f7f7;
-        padding: 20px;
-        text-align: center;
-        font-size: 14px;
-        color: #888;
-      }
+  /* Responsive Styles */
 
-      /* Responsive Styles */
+  @media (max-width: 768px) {
+    .container {
+      padding: 10px;
+    }
 
-      @media (max-width: 768px) {
-        .container {
-          padding: 10px;
-        }
+    header h1 {
+      font-size: 24px;
+    }
 
-        header h1 {
-          font-size: 24px;
-        }
+    section {
+      padding: 10px;
+    }
 
-        section {
-          padding: 10px;
-        }
+    footer {
+      font-size: 12px;
+    }
+  }
+</style>
 
-        footer {
-          font-size: 12px;
-        }
-      }
-    </style>
   </head>
   <body>
     <header>
@@ -110,42 +108,135 @@
         <h2>Endpoints</h2>
         <ul>
           <li>
-            <a href="store/products/">Products</a>
+            <a href="store/products/">
+              <img src="product_icon.png" alt="Products" />
+              Products
+            </a>
+            - Browse and manage your products.
           </li>
           <li>
-            <a href="store/collections/">Collections</a>
+            <a href="store/collections/">
+              <img src="collection_icon.png" alt="Collections" />
+              Collections
+            </a>
+            - Organize your products into collections.
           </li>
           <li>
-            <a href="store/carts/">Carts</a>
+            <a href="store/carts/">
+              <img src="cart_icon.png" alt="Carts" />
+              Carts
+            </a>
+            - View and manage your customers' shopping carts.
           </li>
           <li>
-            <a href="store/orders/">Orders</a>
+            <a href="store/orders/">
+              <img src="order_icon.png" alt="Orders" />
+              Orders
+            </a>
+            - Track and manage orders placed by your customers.
           </li>
           <li>
-            <a href="/store/customers/">Customers</a>
+            <a href="/store/customers/">
+              <img src="customer_icon.png" alt="Customers" />
+              Customers
+            </a>
+            - Manage your customer information and profiles.
           </li>
         </ul>
       </section>
+  <section>
+    <h2>Features</h2>
+    <ul>
+      <li>
+        <img src="search_icon.png" alt="Searching" />
+        Searching
+        - Easily search for products, orders, and customers.
+      </li>
+      <li>
+        <img src="filter_icon.png" alt="Filtering" />
+        Filtering
+        - Refine your search results using various filters.
+      </li>
+      <li>
+        <img src="nested_url_icon.png" alt="Nested URLs" />
+        Nested URLs
+        - Access nested resources through intuitive URLs.
+      </li>
+      <li>
+        <img src="feature_icon.png" alt="Other Features" />
+        Many other new features
+        - Explore additional functionality for enhanced management.
+      </li>
+    </ul>
+  </section>
+  <section>
+    <h2>API Documentation</h2>
+    <ul>
+      <li>
+        <a href="api/docs/">Swagger UI</a>
+        - Explore our API documentation using Swagger UI.
+      </li>
+      <li>
+        <a href="api/readoc/">Redoc</a>
+        - Access detailed API documentation with Redoc.
+      </li>
+    </ul>
+  </section>
+  <section>
+    <h2>Authentication and API Calls</h2>
+    <p>
+      To authenticate and make API calls, you need to use JWT (JSON Web Token)
+      authentication. Please refer to our
+      <a href="api/authentication/">authentication guide</a> for detailed instructions.
+    </p>
+  </section>
+  <section>
+    <h2>User Registration and Login</h2>
+    <p>This feature ensures that users can manage their data, maintain session state, and perform actions within the API according to their specific permissions and privileges.</p>
+  </section>
+  <section>
+    <h2>Caching with Redis Cache Server</h2>
+    <p>
+      We utilize Redis Cache server for caching, which offers several benefits:
+      <ul>
+        <li>Improved performance by reducing database queries and network round-trips.</li>
+        <li>Enhanced scalability as cached data can be quickly served to multiple users.</li>
+        <li>Reduced load on the backend system, leading to better overall system performance.</li>
+        <li>Efficient handling of frequently accessed data, resulting in faster response times.</li>
+      </ul>
+    </p>
+  </section>
+  <section>
+    <h2>Advantages of Real REST API Architecture</h2>
+    <p>
+      Our API follows the principles of a real REST (Representational State Transfer) architecture, providing the following advantages:
+      <ul>
+        <li>Scalability and extensibility through resource-based design and statelessness.</li>
+        <li>Uniform interface for easy integration and development.</li>
+        <li>Separation of concerns with clear client-server communication.</li>
+        <li>Support for multiplerepresentations of data (e.g., JSON, XML), allowing flexibility for different clients.</li>
+        <li>Cacheability of responses for improved performance and reduced server load.</li>
+        <li>Support for hypermedia-driven navigation, enabling clients to discover and interact with resources dynamically.</li>
+      </ul>
+    </p>
+  </section>
+  <section>
+    <h2>Interaction with Postgres Database</h2>
+    <p>
+      Our API interacts with a Postgres database, providing several benefits for data management and scalability:
+      <ul>
+        <li>Relational database structure for efficient and organized storage of data.</li>
+        <li>ACID (Atomicity, Consistency, Isolation, Durability) properties for data integrity and transactional operations.</li>
+        <li>Advanced querying capabilities, including powerful joins and aggregations.</li>
+        <li>Scalability through horizontal and vertical scaling options, allowing for increased workload and user base.</li>
+        <li>Data consistency and reliability, ensuring that information remains accurate and available.</li>
+      </ul>
+    </p>
+  </section>
+  <footer>
+    <p>&copy; 2023 Shopify. All rights reserved.</p>
+  </footer>
+</main>
 
-      <section>
-        <h2>Features</h2>
-        <ul>
-          <li>Searching</li>
-          <li>Filtering</li>
-          <li>Nested URLs</li>
-          <li>Many other new features</li>
-        </ul>
-      </section>
-      <section>
-        <h2>API Documentation</h2>
-        <ul>
-          <li><a href="api/docs/">Swagger UI</a></li>
-          <li><a href="api/readoc/">Redoc</a></li>
-        </ul>
-      </section>
-      <footer>
-        <p>&copy; 2023 Shopify. All rights reserved.</p>
-      </footer>
-    </main>
-  </body>
+</body>
 </html>

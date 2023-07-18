@@ -1,6 +1,5 @@
 import os
 import dj_database_url
-
 from dotenv import load_dotenv
 
 from .common import *
@@ -18,18 +17,29 @@ INSTALLED_APPS += [
 SECRET_KEY = os.environ.get("SECRET_KEY")
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
+# DATABASES = {
+#     "default": dj_database_url.parse(DATABASE_URL),
+# }
+
 DATABASES = {
-    "default": dj_database_url.parse(DATABASE_URL),
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "storefront",
+        "USER": "root",
+        "PASSWORD": "MyPassword",
+        "HOST": "mysql",
+        "PORT": "3306",
+    }
 }
 
 
-CELERY_BROKER_URL = "redis://localhost:6379/1"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
 
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/2",
+        "LOCATION": "redis://redis:6379",
         "OPTIONS": {
             "db": "10",
             "TIMEOUT": 10 * 60,

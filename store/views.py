@@ -57,13 +57,12 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 class ProductImageViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
-        product_pk = self.kwargs["product_pk"]
-        return ProductImage.objects.filter(product_id=product_pk)
+        return ProductImage.objects.filter(product_id=int(self.kwargs["product_pk"]))
 
     serializer_class = ProductImageSerializer
 
     def get_serializer_context(self):
-        return {"product_id": self.kwargs["product_pk"]}
+        return {"product_id": int(self.kwargs["product_pk"])}
 
 
 class CollectionViewSet(viewsets.ModelViewSet):

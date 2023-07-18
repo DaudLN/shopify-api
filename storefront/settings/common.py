@@ -130,9 +130,18 @@ AUTH_USER_MODEL = "core.User"
 LOGIN_FIELD = "email"
 
 DJOSER = {
-    "SERIALIZERS": {
-        "user_create": "core.serializers.UserCreateSerializer",
-        "current_user": "core.serializers.UserSerializer",
+    'PASSWORD_RESET_CONFIRM_URL': 'reset/password/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
+    'PASSWORD_RESET_CONFIRM_RETYPE': True,
+    'SERIALIZERS': {
+        'password_reset': 'djoser.serializers.SendEmailResetSerializer',
+        'password_reset_confirm': 'djoser.serializers.PasswordResetConfirmSerializer',
+        'password_reset_confirm_retype': 'djoser.serializers.PasswordResetConfirmRetypeSerializer',
+        'set_password': 'djoser.serializers.SetPasswordSerializer',
+        'set_password_retype': 'djoser.serializers.SetPasswordRetypeSerializer',
+        'current_user': 'djoser.serializers.UserSerializer',
     },
 }
 
@@ -152,9 +161,13 @@ CELERY_BEAT_SCHEDULE = {
         "task": "playground.tasks.send_emails_to_customers",
         "schedule": 1 * 60,
         "args": ["Hello world"],
-    }
+    },
+    "sent_order_email": {
+        "task": "playground.tasks.sent_order_email",
+        "schedule": 5,
+        "kwargs": {"name": "Hello"},
+    },
 }
-
 
 LOGGING = {
     "version": 1,
@@ -184,6 +197,7 @@ LOGGING = {
         },
     },
 }
+
 
 
 DEFAULT_FROM_EMAIL = "admin.store@storefront.com"

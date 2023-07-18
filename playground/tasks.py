@@ -17,7 +17,7 @@ def send_emails_to_customers(message):
 
 
 @shared_task
-def sent_order_email():
+def sent_order_email(name=None):
     products = Product.objects.values().annotate(total_price=Sum("unit_price"))[:10]
     # Render the HTML content from the template
     html_content = render_to_string("emails/email.html", context={"products": products})
