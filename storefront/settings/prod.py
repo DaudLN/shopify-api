@@ -7,20 +7,18 @@ DEBUG = False
 ALLOWED_HOSTS = ["*"]
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
-DATABASE_URL = os.environ.get("DATABASE_URL")
-REDIS_URL = os.environ.get("REDIS_URL")
 
 DATABASES = {
-    "default": dj_database_url.parse(DATABASE_URL),
+    "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
 }
 
-CELERY_BROKER_URL = REDIS_URL
-CELERY_RESULT_BACKEND = REDIS_URL
+CELERY_BROKER_URL = os.environ.get("REDIS_URL")
+CELERY_RESULT_BACKEND = os.environ.get("REDIS_URL")
 
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": REDIS_URL,
+        "LOCATION": os.environ.get("REDIS_URL"),
         "OPTIONS": {
             "db": "10",
             "TIMEOUT": 10 * 60,
