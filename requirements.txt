@@ -22,6 +22,7 @@ django-debug-toolbar==4.1.0
 django-filter==23.2
 django-redis==5.3.0
 django-rich-logging==0.3.0
+django-silk==5.0.4
 django-templated-mail==1.1.1
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
@@ -30,6 +31,7 @@ drf-nested-routers==0.93.4
 drf-spectacular==0.26.3
 exceptiongroup==1.1.2
 flower==2.0.0
+gprof2dot==2022.7.29
 gunicorn==21.0.1
 humanize==4.7.0
 idna==3.4
