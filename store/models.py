@@ -99,7 +99,6 @@ class Product(models.Model):
     promotions = models.ManyToManyField(
         Promotion, verbose_name=_("promotion"), blank=True
     )
-    image = models.ImageField(upload_to="images/products", null=True)
 
     objects = models.Manager()
     less_in_inventory = FewProductsInInventory()
