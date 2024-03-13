@@ -1,8 +1,8 @@
 version: "3.9"
 services:
   postgres:
-    image: postgres:14.8-alpine3.18
-    container_name: postgres
+    image: postgres:16.2-alpine3.19  
+    container_name: shopify-db
 
     restart: always
     volumes:
@@ -14,7 +14,7 @@ services:
       
   redis:
     image: redis:7.0-alpine3.18
-    container_name: redis
+    container_name: shopify-redis
     ports:
       - 6379:6379
     restart: always
@@ -23,29 +23,29 @@ services:
 
   smtp4dev:
     image: rnwood/smtp4dev:v3
-    container_name: smtp
+    container_name: shopify-smtp
     ports:
-      - 5000:80
-      - 25:25
+      - 5000:5001
+      - 2525:2525
     restart: always
 
   web:
-    container_name: django
+    container_name: shopify-backend
     build:
       context: .
       dockerfile: Dockerfile
-    command: ./wait-for-it.sh mysql:3306 -- ./docker-entrypoint.sh
+    command: ./wait-for-it.sh postgres:5432 -- ./docker-entrypoint.sh
     ports:
-      - 8000:8000
+      - 8000:8002
     depends_on:
       - redis
-      - mysql
+      - postgres
     restart: on-failure
     volumes:
       - .:/app
 
   celery:
-    container_name: celery
+    container_name: shopify-celery
     build:
       context: .
       dockerfile: Dockerfile
@@ -58,7 +58,7 @@ services:
       - .:/app
 
   celery-beat:
-    container_name: celery-beat
+    container_name: shopify-celery-beat
     build:
       context: .
       dockerfile: Dockerfile
@@ -69,7 +69,7 @@ services:
       - .:/app
 
   flower:
-    container_name: flower
+    container_name: shopify-flower
     build:
       context: .
       dockerfile: Dockerfile
@@ -80,23 +80,23 @@ services:
       - celery
     environment:
       DEBUG: 1
-      CELERY_BROKER: redis://redis:6379/0
-      CELERY_BACKEND: redis://redis:6379/0
+      CELERY_BROKER: redis://shopify-redis:6379/0
+      CELERY_BACKEND: redis://shopify-redis:6379/0
     ports:
       - 5555:5555
 
-  # tests:
-  #   container_name: tests
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   command: ./wait-for-it.sh mysql:3306 -- ptw
-  #   depends_on:
-  #     - redis
-  #     - mysql
-  #   tty: true
-  #   volumes:
-  #     - .:/app
+  tests:
+    container_name: shopify-tests
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ./wait-for-it.sh postgres:5432
+    depends_on:
+      - redis
+      - postgres
+    tty: true
+    volumes:
+      - .:/app
 
 volumes:
   mysqldata:
