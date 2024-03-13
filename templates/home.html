@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Your App Landing Page</title>
-    <style>
+    <title>Shopify App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <style>
       
     body {
       font-family: Arial, sans-serif;
@@ -36,6 +36,10 @@
     padding: 10px;
   }
 
+  p {
+    line-height: 20px;
+  }
+
   /* Header Styles */
 
   header {
@@ -63,6 +67,7 @@
   section h2 {
     font-size: 28px;
     margin-bottom: 10px;
+    padding-bottom: 10px;
     border-bottom: #007bff solid 2px;
   }
 
@@ -74,6 +79,34 @@
     text-align: center;
     font-size: 14px;
     color: #888;
+  }
+
+  .social {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .social-icon {
+    color: #007bff;
+    font-size: 24px;
+  }
+
+  .social-github-icon {
+    color: #333;
+  }
+
+  .social-linkedin-icon {
+    color: #0077b5;
+  }
+
+  .social-twitter-icon {
+    color: #1da1f2;
+  }
+
+  .social-facebook-icon {
+    color: #3b5998;
   }
 
   /* Responsive Styles */
@@ -101,46 +134,41 @@
   <body>
     <header>
       <h1>Welcome to Shopify API</h1>
-      <p>Explore the features and endpoints supported by our app.</p>
+      <p>Explore the features and endpoints supported by The app.</p>
     </header>
     <main class="container">
       <section>
         <h2>Endpoints</h2>
         <ul>
           <li>
-            <a href="store/products/">
-              <img src="product_icon.png" alt="Products" />
+            <a href="api/store/products/">
               Products
             </a>
-            - Browse and manage your products.
+            - Browse and manage products.
           </li>
           <li>
-            <a href="store/collections/">
-              <img src="collection_icon.png" alt="Collections" />
+            <a href="api/store/collections/">
               Collections
             </a>
-            - Organize your products into collections.
+            - Organize products into collections.
           </li>
           <li>
-            <a href="store/carts/">
-              <img src="cart_icon.png" alt="Carts" />
+            <a href="api/store/carts/">
               Carts
             </a>
-            - View and manage your customers' shopping carts.
+            - View and manage customers' shopping carts.
           </li>
           <li>
-            <a href="store/orders/">
-              <img src="order_icon.png" alt="Orders" />
+            <a href="api/store/orders/">
               Orders
             </a>
-            - Track and manage orders placed by your customers.
+            - Track and manage orders placed by customers.
           </li>
           <li>
-            <a href="/store/customers/">
-              <img src="customer_icon.png" alt="Customers" />
+            <a href="/api/store/customers/">
               Customers
             </a>
-            - Manage your customer information and profiles.
+            - Manage customer information and profiles.
           </li>
         </ul>
       </section>
@@ -148,23 +176,20 @@
     <h2>Features</h2>
     <ul>
       <li>
-        <img src="search_icon.png" alt="Searching" />
-        Searching
+        <span>Searching</span>
+        
         - Easily search for products, orders, and customers.
       </li>
       <li>
-        <img src="filter_icon.png" alt="Filtering" />
-        Filtering
-        - Refine your search results using various filters.
+        <span>Filtering</span>
+        - Refine search results using various filters.
       </li>
       <li>
-        <img src="nested_url_icon.png" alt="Nested URLs" />
-        Nested URLs
+        <span>Nested URLs</span>
         - Access nested resources through intuitive URLs.
       </li>
       <li>
-        <img src="feature_icon.png" alt="Other Features" />
-        Many other new features
+        <span>Many new features</span>
         - Explore additional functionality for enhanced management.
       </li>
     </ul>
@@ -174,7 +199,7 @@
     <ul>
       <li>
         <a href="api/docs/">Swagger UI</a>
-        - Explore our API documentation using Swagger UI.
+        - Explore The API documentation using Swagger UI.
       </li>
       <li>
         <a href="api/readoc/">Redoc</a>
@@ -186,8 +211,7 @@
     <h2>Authentication and API Calls</h2>
     <p>
       To authenticate and make API calls, you need to use JWT (JSON Web Token)
-      authentication. Please refer to our
-      <a href="api/authentication/">authentication guide</a> for detailed instructions.
+      authentication.
     </p>
   </section>
   <section>
@@ -209,7 +233,7 @@
   <section>
     <h2>Advantages of Real REST API Architecture</h2>
     <p>
-      Our API follows the principles of a real REST (Representational State Transfer) architecture, providing the following advantages:
+      The API follows the principles of a real REST (Representational State Transfer) architecture, providing the following advantages:
       <ul>
         <li>Scalability and extensibility through resource-based design and statelessness.</li>
         <li>Uniform interface for easy integration and development.</li>
@@ -223,7 +247,7 @@
   <section>
     <h2>Interaction with Postgres Database</h2>
     <p>
-      Our API interacts with a Postgres database, providing several benefits for data management and scalability:
+      The API interacts with a Postgres database, providing several benefits for data management and scalability:
       <ul>
         <li>Relational database structure for efficient and organized storage of data.</li>
         <li>ACID (Atomicity, Consistency, Isolation, Durability) properties for data integrity and transactional operations.</li>
@@ -234,9 +258,21 @@
     </p>
   </section>
   <footer>
-    <p>&copy; 2023 Shopify. All rights reserved.</p>
+    <p>&copy; <span><script>document.write(new Date().getFullYear())</script></span> Daud L Namayala. All rights reserved.</p>
+    <div class="social">
+      <a href="https://github.com/daudln" target="_blank" title="GitHub">
+        <i class="fab fa-github social-icon social-github-icon"></i>
+      </a>
+      <a href="https://x.com/daudln" target="_blank" title="Twitter">
+        <i class="fa-brands fa-x-twitter social-icon social-twitter-icon"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/daudln" target="_blank" title="LinkedIn">
+        <i class="fa-brands fa-linkedin social-icon social-linkedin-icon"></i>
+      </a>
+    </div>
   </footer>
 </main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/brands.min.js" integrity="sha512-giAmE8KpCT6HP3DEwIvW9LYVnDs79iIaKEYFTjH62EWoglWgdAJa1ahiLUfoc3NFaAeWM6E3VdQyH1Ob2dmwQw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </body>
 </html>
