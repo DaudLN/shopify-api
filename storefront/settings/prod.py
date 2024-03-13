@@ -4,7 +4,7 @@ from .common import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["shopify-ed15.onrender.com"]
+ALLOWED_HOSTS = [host for host in os.environ.get("ALLOWED_HOSTS").split(",") if host]
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
