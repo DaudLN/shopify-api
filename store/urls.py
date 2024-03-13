@@ -33,7 +33,7 @@ urlpatterns = [
         SpectacularRedocView.as_view(url_name="schema"),
         name="redoc",
     ),
-    path(r"store/", include(router.urls)),
-    path(r"store/", include(product_router.urls)),
-    path(r"store/", include(cart_router.urls)),
+    path(r"api/store/", include(router.urls)),
+    path(r"api/store/", include(product_router.urls)),
+    path(r"api/store/", include(cart_router.urls)),
 ]
