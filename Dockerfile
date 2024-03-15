@@ -18,6 +18,3 @@ RUN pipenv install --system --dev --verbose --skip-lock
 
 # Copy the application files into the image
 COPY . /app/
-
-# Expose port 8000 on the container
-EXPOSE 8000

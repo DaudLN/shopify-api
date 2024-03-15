@@ -30,9 +30,9 @@ def sent_order_email(name=None):
         email = EmailMultiAlternatives(
             "Thanks for your order",
             text_content,
-            to=["daudnamayala@gmail.com", "sailing@gmail.com", "admin@dj.com"],
+            to=["daudnamayala@gmail.com"],
         )
-        email.attach_file("media/images/products/me.jpg")
+        # email.attach_file("media/images/products/me.jpg")
         # Attach the HTML content
         email.attach_alternative(html_content, "text/html")
 

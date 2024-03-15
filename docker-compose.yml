@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   postgres:
-    image: postgres:16.2-alpine3.19  
+    image: postgres:16.2-alpine3.19
     container_name: shopify-db
 
     restart: always
@@ -10,13 +10,13 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
     ports:
-      - 5432:5432
+      - 5433:5432
       
   redis:
     image: redis:7.0-alpine3.18
     container_name: shopify-redis
     ports:
-      - 6379:6379
+      - "6380:6379"
     restart: always
     volumes:
       - redisdata:/data
@@ -25,8 +25,8 @@ services:
     image: rnwood/smtp4dev:v3
     container_name: shopify-smtp
     ports:
-      - 5000:5001
-      - 2525:2525
+      - "5001:5000"
+      - "2526:2525"
     restart: always
 
   web:
@@ -36,11 +36,13 @@ services:
       dockerfile: Dockerfile
     command: ./wait-for-it.sh postgres:5432 -- ./docker-entrypoint.sh
     ports:
-      - 8000:8002
+      - "8000:80"
     depends_on:
       - redis
       - postgres
     restart: on-failure
+    env_file:
+      - docker.env
     volumes:
       - .:/app
 
@@ -49,11 +51,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    command: celery -A storefront worker --loglevel=info
     depends_on:
       - redis
-    environment:
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
+    env_file:
+      - docker.env
     volumes:
       - .:/app
 
@@ -65,6 +67,8 @@ services:
     command: celery -A storefront beat --loglevel=info
     depends_on:
       - redis
+    environment:
+      REDIS_SERVER: redis://redis:6379
     volumes:
       - .:/app
 
@@ -78,23 +82,25 @@ services:
       - web
       - redis
       - celery
-    environment:
-      DEBUG: 1
-      CELERY_BROKER: redis://shopify-redis:6379/0
-      CELERY_BACKEND: redis://shopify-redis:6379/0
     ports:
-      - 5555:5555
+      - "5555:5555"
+    env_file:
+      - docker.env
 
   tests:
     container_name: shopify-tests
     build:
       context: .
       dockerfile: Dockerfile
-    command: ./wait-for-it.sh postgres:5432
+    command: ./wait-for-it.sh postgres:5432 -- locust -f locust/locustfile.py
     depends_on:
       - redis
       - postgres
+    ports:
+      - "8080:80"
     tty: true
+    env_file:
+      - docker.env
     volumes:
       - .:/app
 

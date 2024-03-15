@@ -14,18 +14,19 @@ class WebUser(HttpUser):
         collection_id = randint(2, 6)
         print("Viewing products")
         self.client.get(
-            f"/store/products/?collection_id={collection_id}", name="/products/"
+            f"/api/store/products/?collection_id={collection_id}", name="/products/"
         )
 
     @task(4)
     def view_product(self):
         print("Viewing product details")
         product_id = randint(1, 1000)
-        self.client.get(f"/store/products/{product_id}", name="/product/:id/")
+        self.client.get(f"/api/store/products/{product_id}", name="/product/:id/")
 
     @task(1)
     def view_product_images(self):
+        print("Viewing product images")
         product_id = randint(1, 1000)
         self.client.get(
-            f"/store/products/{product_id}/images/", name="/product/:id/images/"
+            f"/api/store/products/{product_id}/images/", name="/product/:id/images/"
         )

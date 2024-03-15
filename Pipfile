@@ -94,6 +94,7 @@ vine = "==5.0.0"
 wcwidth = "==0.2.6"
 wrapt = "==1.15.0"
 django-cors-headers = "*"
+locust = "*"
 
 [dev-packages]
 autopep8 = "*"
