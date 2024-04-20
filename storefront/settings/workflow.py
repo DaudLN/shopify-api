@@ -1,5 +1,3 @@
-import dj_database_url
-
 from .common import *  # noqa: F403
 
 DEBUG = False
@@ -11,9 +9,10 @@ SECRET_KEY = "lZmQiuSTxAWKOtPb4PxvFrwJNmIp259DJN2a9yqI7+9WWSdMZ56DONI4LFZlrt3H"
 DEBUG = True
 
 DATABASES = {
-    "default": dj_database_url.parse(
-        url="postgresql://workflow:workflow@postgres:5432/workflow"
-    ),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",  # noqa: F405
+    }
 }
 
 INSTALLED_APPS += [  # noqa: F405

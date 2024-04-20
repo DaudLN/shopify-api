@@ -16,14 +16,6 @@ jobs:
     container: python:3.10-slim-buster
 
     services:
-      postgres:
-        image: postgres:16.2-alpine3.19
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_USER: workflow
-          POSTGRES_PASSWORD: workflow
-          POSTGRES_DB: workflow
       redis:
         image: redis:7.0-alpine3.19
         ports:
@@ -49,6 +41,6 @@ jobs:
       - name: Install Dependencies
         run: poetry install && poetry lock --no-update
       - name: Make migrations
-        run: poetry run python manage.py makemigrations && poetry run python manage.py migrate
+        run: python manage.py makemigrations && poetry run python manage.py migrate
       - name: Run Tests
         run: poetry run python manage.py test

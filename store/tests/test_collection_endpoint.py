@@ -12,10 +12,7 @@ class TestCreateCollection:
 
         # Act
         client = APIClient()
-        response: Response = client.post(
-            "/collections/", dict(title="a")
-        )
+        response: Response = client.post("api/store/collections/", dict(title="a"))
 
         # Act
         assert response.status_code == status.HTTP_403_FORBIDDEN
-        
