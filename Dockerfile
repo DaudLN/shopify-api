@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Required to install mysqlclient client and other dependencies
 RUN apt-get update \
-  && apt-get install python3-dev default-libmysqlclient-dev gcc -y
+  && apt-get install python3-dev gcc -y
 
 # Install pipenv
 RUN pip install --upgrade pip 

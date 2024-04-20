@@ -1,4 +1,3 @@
-from typing import Any
 from uuid import uuid4
 
 from django.conf import settings
@@ -7,7 +6,7 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from django.db.models import Count, Sum
+from django.db.models import Count
 from django.utils.text import slugify
 
 # Create your models here.
@@ -57,7 +56,7 @@ class FailOrderManager(models.Manager):
 class Promotion(models.Model):
     description = models.CharField(max_length=255)
     discout = models.DecimalField(
-        max_digits=6, decimal_places=2, validators=[MinValueValidator(1)]
+        max_digits=6, decimal_places=2, validators=[MinValueValidator(1.00)]
     )
 
     class Meta:
@@ -89,7 +88,7 @@ class Product(models.Model):
     slug = models.SlugField(_("Slug field"))
     description = models.TextField()
     unit_price = models.DecimalField(
-        max_digits=6, decimal_places=2, validators=[MinValueValidator(1)]
+        max_digits=6, decimal_places=2, validators=[MinValueValidator(1.00)]
     )
     inventory = models.IntegerField(validators=[MinValueValidator(1)])
     last_update = models.DateTimeField(auto_now=True)
@@ -191,7 +190,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
     quantity = models.PositiveSmallIntegerField(validators=[MinValueValidator(1)])
     unit_price = models.DecimalField(
-        max_digits=6, decimal_places=2, validators=[MinValueValidator(1)]
+        max_digits=6, decimal_places=2, validators=[MinValueValidator(1.00)]
     )
 
 
