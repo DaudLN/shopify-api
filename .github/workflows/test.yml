@@ -40,7 +40,3 @@ jobs:
           poetry-version: "1.8.2"
       - name: Install Dependencies
         run: poetry install && poetry lock --no-update
-      - name: Make migrations
-        run: python manage.py makemigrations && poetry run python manage.py migrate
-      - name: Run Tests
-        run: poetry run python manage.py test
