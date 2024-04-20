@@ -47,7 +47,7 @@ jobs:
         with:
           poetry-version: "1.8.2"
       - name: Install Dependencies
-        run: make install && make install-pre-commit
+        run: poetry install
 
       - name: Run Lint
-        run: make lint
+        run: poetry run pre-commit run --all-files
