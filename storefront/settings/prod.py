@@ -5,13 +5,17 @@ from .common import *  # noqa: F403
 DEBUG = False
 
 ALLOWED_HOSTS = [host for host in os.environ.get("ALLOWED_HOSTS").split(",") if host]
+
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DATABASES = {
     "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
 }
 
+MIDDLEWARE += ["whitenoise.middleware.WhiteNoiseMiddleware"] # noqa: F405
+
 CELERY_BROKER_URL = os.environ.get("REDIS_URL")
+
 CELERY_RESULT_BACKEND = os.environ.get("REDIS_URL")
 
 CACHES = {
