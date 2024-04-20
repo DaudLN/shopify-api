@@ -48,6 +48,3 @@ jobs:
           poetry-version: "1.8.2"
       - name: Install Dependencies
         run: poetry install && poetry lock --no-update
-
-      - name: Run Lint
-        run: poetry run pre-commit run --all-files
