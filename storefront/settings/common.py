@@ -6,6 +6,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Application definition
 
+DEBUG = False
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",

@@ -30,7 +30,6 @@ whitenoise = "6.6.0"
 psycopg = "^3.1.18"
 pillow = "^10.3.0"
 
-
 [tool.poetry.group.dev.dependencies]
 scanreq = "^0.0.9"
 django-silk = "^5.1.0"
@@ -40,6 +39,8 @@ isort = "^5.13.2"
 pytest = "^8.1.1"
 pytest-django = "^4.8.0"
 pip-upgrader = "^1.4.15"
+werkzeug = "3.0.2"
+django-extensions = "^3.2.3"
 
 [build-system]
 requires = ["poetry-core"]
