@@ -1,0 +1,53 @@
+name: Storefront CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+env:
+  DJANGO_SETTINGS_MODULE: "storefront.settings.workflow"
+
+jobs:
+  test:
+    name: Test Application
+    runs-on: ubuntu-22.04
+    container: python:3.10.12-alpine3.18
+
+    services:
+      postgres:
+        image: postgres:16.2-alpine3.19
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: workflow
+          POSTGRES_PASSWORD: workflow
+          POSTGRES_DB: workflow
+      redis:
+        image: redis:7.0-alpine3.19
+        ports:
+          - "6379:6379"
+      smtp4dev:
+        image: rnwood/smtp4dev:v3
+        ports:
+          - "5000:5000"
+          - "2525:2525"
+
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: ["3.9", "3.10", "3.11"]
+        django-version: ["4.2", "5.0"]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Poetry
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: "1.8.2"
+      - name: Install Dependencies
+        run: make install && make install-pre-commit
+
+      - name: Run Lint
+        run: make lint
