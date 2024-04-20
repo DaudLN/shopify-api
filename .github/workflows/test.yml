@@ -13,7 +13,7 @@ jobs:
   test:
     name: Test Application
     runs-on: ubuntu-22.04
-    container: python:3.10.12-alpine3.18
+    container: python:3.10-slim-buster
 
     services:
       postgres:
