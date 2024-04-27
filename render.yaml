@@ -1,0 +1,36 @@
+services:
+- type: web
+  name: shopify
+  runtime: python
+  repo: https://github.com/daudln/shopify-api
+  plan: free
+  envVars:
+  - key: SECRET_KEY
+    sync: false
+  - key: REDIS_URL
+    sync: false
+  - key: PYTHON_VERSION
+    sync: false
+  - key: EMAIL_USE_TLS
+    sync: false
+  - key: EMAIL_USE_SSL
+    sync: false
+  - key: EMAIL_PORT
+    sync: false
+  - key: EMAIL_HOST_USER
+    sync: false
+  - key: EMAIL_HOST_PASSWORD
+    sync: false
+  - key: EMAIL_HOST
+    sync: false
+  - key: DJANGO_SETTINGS_MODULE
+    sync: false
+  - key: DATABASE_URL
+    sync: false
+  - key: ALLOWED_HOSTS
+    sync: false
+  region: oregon
+  buildCommand: pip install -r requirements.txt && pip install -r requirements.prod.txt
+    && python manage.py collectstatic
+  startCommand: gunicorn storefront.wsgi:application
+version: "1"
